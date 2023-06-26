@@ -1,39 +1,61 @@
 <template>
-  <el-table
-      :data="tableData"
-      style="width: 100%"
-      :row-class-name="tableRowClassName"
-  >
-    <el-table-column prop="date" label="Date" width="180"/>
-    <el-table-column prop="name" label="Name" width="180"/>
-    <el-table-column prop="address" label="Address"/>
-  </el-table>
+  <el-card class="box-card">
+    <template #header>
+      <div class="card-header">
+        <span>服务列表</span>
+      </div>
+    </template>
+    <el-table
+        :data="tableData"
+        style="width: 100%"
+        border
+        :row-class-name="tableRowClassName"
+    >
+      <el-table-column type="expand">
+        <template #default="props">
+          <el-card class="box-card" style="width: 250px;margin-left: 4rem;">
+            <template #header>
+              <div class="card-header">
+                <span>Service</span>
+              </div>
+            </template>
+            <el-table :data="props.row.services" border>
+              <el-table-column label="Host" prop="host"/>
+              <el-table-column label="Port" prop="port"/>
+            </el-table>
+          </el-card>
+        </template>
+      </el-table-column>
+      <el-table-column prop="id" label="ID" width="180"/>
+      <el-table-column prop="name" label="Name" width="180"/>
+      <el-table-column prop="namespace" label="Namespace"/>
+    </el-table>
+  </el-card>
 </template>
 
 <script setup>
 
 import {getServices} from "~/api/servicesApi.js";
+import {computed, ref} from "vue";
 
 const tableRowClassName = (
-    row,
-    rowIndex,
+    {
+      row,
+      rowIndex,
+    }
 ) => {
-  if (rowIndex === 1) {
+  if (row.services.length === 0) {
     return 'warning-row'
-  } else if (rowIndex === 3) {
+  } else {
     return 'success-row'
   }
-  return ''
 }
-let tableData = []
+let tableData = ref([]);
 getServices().then(
-    (response) => {
-      console.log(response)
-    },
-    (error) => {
-      console.log(error)
-    },
-)
+    (data) => {
+      tableData.value = data
+    }
+);
 </script>
 
 <style>

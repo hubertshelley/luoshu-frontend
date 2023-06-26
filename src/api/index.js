@@ -5,4 +5,9 @@ const axiosInstance = axios.create({
     timeout: 1000,
 });
 
+axiosInstance.interceptors.response.use(
+    (response) => {
+        return response.data.data;
+    }
+)
 export default axiosInstance;

@@ -9,7 +9,7 @@
       </el-aside>
 
       <el-container>
-        <el-main>
+        <el-main style="padding: 2rem">
           <router-view></router-view>
         </el-main>
         <el-footer>

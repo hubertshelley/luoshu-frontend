@@ -1,7 +1,7 @@
 import axios from "~/api/index.js";
 
 async function getServices() {
-    await axios.get(
+    return await axios.get(
         "/service"
     )
 }

@@ -1,7 +1,7 @@
 import axios from "~/api/index.js";
 
 async function getConfigurations() {
-    await axios.get(
+    return await axios.get(
         "/configuration"
     )
 }
