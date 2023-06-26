@@ -27,7 +27,7 @@ export default defineConfig({
         proxy: {
             // 带选项写法：http://localhost:5173/api/bar -> http://jsonplaceholder.typicode.com/bar
             '/api': {
-                target: 'http://127.0.0.1:19999/api', changeOrigin: true,
+                target: 'http://127.0.0.1:19999', changeOrigin: true,
             },
         },
     },
