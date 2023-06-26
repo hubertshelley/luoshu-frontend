@@ -1,69 +1,30 @@
 <template>
   <el-scrollbar>
-    <el-menu :default-openeds="['1', '3']">
-      <el-sub-menu index="1">
-        <template #title>
-          <el-icon>
-            <message/>
-          </el-icon>
-          Navigator One
-        </template>
-        <el-menu-item-group>
-          <template #title>Group 1</template>
-          <el-menu-item index="1-1">Option 1</el-menu-item>
-          <el-menu-item index="1-2">Option 2</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group title="Group 2">
-          <el-menu-item index="1-3">Option 3</el-menu-item>
-        </el-menu-item-group>
-        <el-sub-menu index="1-4">
-          <template #title>Option4</template>
-          <el-menu-item index="1-4-1">Option 4-1</el-menu-item>
-        </el-sub-menu>
-      </el-sub-menu>
-      <el-sub-menu index="2">
-        <template #title>
-          <el-icon>
-            <icon-menu/>
-          </el-icon>
-          Navigator Two
-        </template>
-        <el-menu-item-group>
-          <template #title>Group 1</template>
-          <el-menu-item index="2-1">Option 1</el-menu-item>
-          <el-menu-item index="2-2">Option 2</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group title="Group 2">
-          <el-menu-item index="2-3">Option 3</el-menu-item>
-        </el-menu-item-group>
-        <el-sub-menu index="2-4">
-          <template #title>Option 4</template>
-          <el-menu-item index="2-4-1">Option 4-1</el-menu-item>
-        </el-sub-menu>
-      </el-sub-menu>
-      <el-sub-menu index="3">
-        <template #title>
-          <el-icon>
-            <setting/>
-          </el-icon>
-          Navigator Three
-        </template>
-        <el-menu-item-group>
-          <template #title>Group 1</template>
-          <el-menu-item index="3-1">Option 1</el-menu-item>
-          <el-menu-item index="3-2">Option 2</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group title="Group 2">
-          <el-menu-item index="3-3">Option 3</el-menu-item>
-        </el-menu-item-group>
-        <el-sub-menu index="3-4">
-          <template #title>Option 4</template>
-          <el-menu-item index="3-4-1">Option 4-1</el-menu-item>
-        </el-sub-menu>
-      </el-sub-menu>
+    <el-menu router unique-opened>
+      <el-menu-item v-for="route in routes" :key="route.path" :index="route.path">
+        <el-icon :icon="route.meta.icon"></el-icon>
+        <span slot="title">{{ route.meta.title }}</span>
+      </el-menu-item>
     </el-menu>
   </el-scrollbar>
 </template>
 <script setup>
-import {Message, Setting} from "@element-plus/icons-vue";
+import router from "~/routes/index.js";
+
+let routes = filterRouter(router.getRoutes())
+
+function filterRouter(routes) {
+  return routes.filter(route => {
+    if (route.redirect) {
+      return false
+    }
+    if (route.meta && route.meta.hidden) {
+      return false
+    }
+    if (route.children && route.children.length) {
+      route.children = filterRouter(route.children)
+    }
+    return true
+  })
+}
 </script>
