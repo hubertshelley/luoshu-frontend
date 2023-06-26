@@ -1,6 +1,6 @@
 <template>
-  <el-scrollbar>
-    <el-menu router unique-opened>
+  <el-scrollbar class="side-menu">
+    <el-menu router unique-opened class="menu">
       <el-menu-item v-for="route in routes" :key="route.path" :index="route.path">
         <el-icon :icon="route.meta.icon"></el-icon>
         <span slot="title">{{ route.meta.title }}</span>
@@ -28,3 +28,12 @@ function filterRouter(routes) {
   })
 }
 </script>
+<style>
+.side-menu {
+  border-right: solid 1px var(--el-menu-border-color);
+
+  .menu {
+    border-right: 0;
+  }
+}
+</style>

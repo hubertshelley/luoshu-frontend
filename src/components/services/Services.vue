@@ -3,6 +3,7 @@
     <template #header>
       <div class="card-header">
         <span>服务列表</span>
+        <el-button @click="get_data" type="primary">刷新</el-button>
       </div>
     </template>
     <el-table
@@ -36,7 +37,7 @@
 <script setup>
 
 import {getServices} from "~/api/servicesApi.js";
-import {computed, ref} from "vue";
+import {ref} from "vue";
 
 const tableRowClassName = (
     {
@@ -51,11 +52,14 @@ const tableRowClassName = (
   }
 }
 let tableData = ref([]);
-getServices().then(
-    (data) => {
-      tableData.value = data
-    }
-);
+const get_data = () => {
+  getServices().then(
+      (data) => {
+        tableData.value = data
+      }
+  );
+}
+get_data()
 </script>
 
 <style>
