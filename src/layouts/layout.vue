@@ -98,7 +98,9 @@
             </el-table>
           </el-scrollbar>
         </el-main>
-        <footer></footer>
+        <el-footer>
+          <Footer/>
+        </el-footer>
       </el-container>
     </el-container>
   </el-container>
@@ -107,6 +109,8 @@
 <script setup>
 import {ref} from 'vue'
 import {Menu as IconMenu, Message, Setting} from '@element-plus/icons-vue'
+import Footer from "./footer.vue";
+
 
 const item = {
   date: '2016-05-02',
